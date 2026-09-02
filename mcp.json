@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "equinix-fabric": {
+      "type": "http",
+      "url": "https://mcp.equinix.com/fabric"
+    }
+  }
+}

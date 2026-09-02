@@ -1,0 +1,34 @@
+{
+  "name": "equinix-agent-plugins",
+  "metadata": {
+    "description": "Equinix agent plugins: skills and remote MCP servers for operating Equinix products from agentic coding tools.",
+    "version": "1.0.0"
+  },
+  "owner": {
+    "name": "Equinix",
+    "url": "https://github.com/equinix/equinix-agent-plugins"
+  },
+  "plugins": [
+    {
+      "name": "equinix-fabric",
+      "source": "./fabric-agent-plugins",
+      "description": "Operate Equinix Fabric from your agent: search inventory (connections, ports, cloud routers, service tokens, route filters/aggregations, time services) and manage Fabric Cloud Routers, BGP, route filters and route aggregations.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Equinix Fabric"
+      },
+      "homepage": "https://docs.equinix.com/fabric",
+      "license": "Apache-2.0",
+      "keywords": [
+        "equinix",
+        "fabric",
+        "cloud-router",
+        "networking",
+        "interconnection",
+        "bgp",
+        "mcp"
+      ],
+      "category": "infrastructure"
+    }
+  ]
+}
