@@ -1,0 +1,23 @@
+{
+  "name": "equinix-fabric",
+  "version": "1.0.0",
+  "description": "Operate Equinix Fabric from your agent: search inventory (connections, ports, cloud routers, service tokens, route filters/aggregations, time services) and manage Fabric Cloud Routers, BGP, route filters and route aggregations.",
+  "author": {
+    "name": "Equinix Fabric",
+    "url": "https://github.com/equinix/equinix-agent-plugins"
+  },
+  "homepage": "https://docs.equinix.com/fabric",
+  "repository": "https://github.com/equinix/equinix-agent-plugins",
+  "license": "Apache-2.0",
+  "keywords": [
+    "equinix",
+    "fabric",
+    "cloud-router",
+    "networking",
+    "interconnection",
+    "bgp",
+    "mcp"
+  ],
+  "skills": "./skills",
+  "mcpServers": "./mcp.json"
+}
