@@ -24,7 +24,7 @@ marketplaces are outside the standard's scope.
 
 ```
 .claude-plugin/marketplace.json      # marketplace index (what Claude Code adds)
-codex/config.toml.example            # Codex MCP snippet
+LICENSE
 fabric-agent-plugins/                # the equinix-fabric plugin
 ├── plugin.json                      # plugin manifest
 ├── mcp.json                         # remote MCP server bundled with the plugin
@@ -129,15 +129,32 @@ clone:
 
 Codex has no marketplace, so wire up the MCP server and the skills separately.
 
-**1. Add the MCP server.** Either run:
+**1. Add the MCP server.** The quick way:
 
 ```bash
 codex mcp add equinix-fabric --url https://mcp.equinix.com/fabric
 ```
 
-…or merge [`codex/config.toml.example`](codex/config.toml.example) into `~/.codex/config.toml`.
-Remote streamable-HTTP servers need `experimental_use_rmcp_client = true` at the top level of
-that file.
+That registers the server but not the flag it needs — remote streamable-HTTP servers require
+`experimental_use_rmcp_client = true` at the **top level** of `~/.codex/config.toml` (outside
+any `[mcp_servers.*]` table). Add that line, or skip the CLI and merge this block into
+`~/.codex/config.toml` yourself:
+
+```toml
+# Streamable-HTTP remote MCP servers require the Rust MCP client.
+experimental_use_rmcp_client = true
+
+[mcp_servers.equinix_fabric]
+url = "https://mcp.equinix.com/fabric"
+# Optional: raise if Fabric searches over large inventories time out.
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+# If your Equinix tenant issues a bearer token instead of using the browser
+# OAuth flow, uncomment and point at an env var — never inline the secret:
+# [mcp_servers.equinix_fabric.http_headers]
+# Authorization = "Bearer ${EQUINIX_MCP_TOKEN}"
+```
 
 Confirm it registered:
 
