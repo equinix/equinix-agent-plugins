@@ -17,13 +17,17 @@ and anything else that speaks MCP) can operate Equinix Fabric directly.
 
 ### Layout
 
+Plugins follow the [Agent Plugin standard](https://agent-plugins.org/): `plugin.json` and
+`mcp.json` sit at the plugin root, with components in fixed locations beneath it. The
+`.claude-plugin/marketplace.json` at the repo root is the Claude Code marketplace index —
+marketplaces are outside the standard's scope.
+
 ```
-.claude-plugin/marketplace.json      # marketplace manifest (what Claude Code adds)
-mcp.json                             # portable MCP server definition for other agents
+.claude-plugin/marketplace.json      # marketplace index (what Claude Code adds)
 codex/config.toml.example            # Codex MCP snippet
 fabric-agent-plugins/                # the equinix-fabric plugin
-├── .claude-plugin/plugin.json       # plugin manifest
-├── .mcp.json                        # remote MCP server bundled with the plugin
+├── plugin.json                      # plugin manifest
+├── mcp.json                         # remote MCP server bundled with the plugin
 └── skills/
     ├── show-fabric-inventory/SKILL.md
     └── manage-cloud-router/SKILL.md
@@ -157,7 +161,7 @@ project. Pull the repo to update; remove the symlinks to uninstall.
 ## Install in other MCP clients
 
 Any MCP client that supports remote HTTP servers can use the server definition in
-[`mcp.json`](mcp.json):
+[`fabric-agent-plugins/mcp.json`](fabric-agent-plugins/mcp.json):
 
 ```json
 {
@@ -175,21 +179,31 @@ The skills are plain Markdown — point your agent's skill/instruction loader at
 
 ## Contributing a plugin
 
-1. Create `<my-plugin>/.claude-plugin/plugin.json` with `name`, `version`, and `description`.
+1. Create `<my-plugin>/plugin.json` with `name`, `version`, and `description`.
 2. Put skills under `<my-plugin>/skills/<skill-name>/SKILL.md`, with any supporting docs in a
    sibling `references/` directory.
-3. Add remote MCP servers to `<my-plugin>/.mcp.json`.
+3. Add remote MCP servers to `<my-plugin>/mcp.json`, and point `plugin.json`'s `mcpServers`
+   at `./mcp.json`.
 4. Register the plugin in the `plugins` array of
    [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
-Validate before opening a PR:
+Validate the marketplace manifest before opening a PR:
 
 ```bash
 claude plugin validate .
 ```
+
+Note: `claude plugin validate ./<my-plugin>` reports "No manifest found" — that validator only
+looks for the legacy `.claude-plugin/plugin.json` location, not the standard's root
+`plugin.json`. Installing the plugin resolves the root manifest correctly; validate the
+marketplace and then install to test.
 
 Test against your working copy without publishing:
 
 ```bash
 claude plugin marketplace add /path/to/equinix-agent-plugins
 ```
+
+## License
+
+Apache License 2.0 — see [LICENSE](LICENSE). Copyright 2026 Equinix, Inc.
