@@ -129,51 +129,15 @@ clone:
 
 Codex has no marketplace, so wire up the MCP server and the skills separately.
 
-**1. Add the MCP server.** The quick way:
+**1. Add the skills.** Go to Codex → **Plugins** → **Add** → **Add marketplace**, provide the
+repo link `https://github.com/equinix/equinix-agent-plugins`, go to your personal space, select
+`equinix-fabric`, and install.
+
+**2. Add the MCP server.** The quick way:
 
 ```bash
 codex mcp add equinix-fabric --url https://mcp.equinix.com/fabric
 ```
-
-That registers the server but not the flag it needs — remote streamable-HTTP servers require
-`experimental_use_rmcp_client = true` at the **top level** of `~/.codex/config.toml` (outside
-any `[mcp_servers.*]` table). Add that line, or skip the CLI and merge this block into
-`~/.codex/config.toml` yourself:
-
-```toml
-# Streamable-HTTP remote MCP servers require the Rust MCP client.
-experimental_use_rmcp_client = true
-
-[mcp_servers.equinix_fabric]
-url = "https://mcp.equinix.com/fabric"
-# Optional: raise if Fabric searches over large inventories time out.
-startup_timeout_sec = 30
-tool_timeout_sec = 120
-
-# If your Equinix tenant issues a bearer token instead of using the browser
-# OAuth flow, uncomment and point at an env var — never inline the secret:
-# [mcp_servers.equinix_fabric.http_headers]
-# Authorization = "Bearer ${EQUINIX_MCP_TOKEN}"
-```
-
-Confirm it registered:
-
-```bash
-codex mcp list
-```
-
-**2. Add the skills.** Clone this repo and link the skills into your Codex skills directory:
-
-```bash
-git clone https://github.com/equinix/equinix-agent-plugins.git ~/src/equinix-agent-plugins
-```
-
-```bash
-mkdir -p ~/.codex/skills && ln -sfn ~/src/equinix-agent-plugins/fabric-agent-plugins/skills/show-fabric-inventory ~/.codex/skills/show-fabric-inventory && ln -sfn ~/src/equinix-agent-plugins/fabric-agent-plugins/skills/manage-cloud-router ~/.codex/skills/manage-cloud-router
-```
-
-Use `.codex/skills/` inside a repo instead of `~/.codex/skills/` to scope the skills to one
-project. Pull the repo to update; remove the symlinks to uninstall.
 
 ## Install in other MCP clients
 
