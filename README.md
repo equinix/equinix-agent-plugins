@@ -22,11 +22,18 @@ Plugins follow the [Agent Plugin standard](https://agent-plugins.org/): `plugin.
 `.claude-plugin/marketplace.json` at the repo root is the Claude Code marketplace index —
 marketplaces are outside the standard's scope.
 
+Each plugin also carries a `.claude-plugin/plugin.json` that duplicates the root manifest.
+Claude Code's CLI reads the root `plugin.json` and doesn't need it, but the Claude Desktop
+marketplace sync validates strictly against `.claude-plugin/plugin.json` and fails with
+`marketplace_sync_plugin_missing_manifest` without it. Keep the two files identical — if you
+edit one, edit the other.
+
 ```
 .claude-plugin/marketplace.json      # marketplace index (what Claude Code adds)
 LICENSE
 fabric-agent-plugins/                # the equinix-fabric plugin
-├── plugin.json                      # plugin manifest
+├── plugin.json                      # plugin manifest (Agent Plugin standard / Codex)
+├── .claude-plugin/plugin.json       # duplicate manifest for Claude Desktop's strict sync
 ├── mcp.json                         # remote MCP server bundled with the plugin
 └── skills/
     ├── show-fabric-inventory/SKILL.md
@@ -165,7 +172,11 @@ The skills are plain Markdown — point your agent's skill/instruction loader at
    sibling `references/` directory.
 3. Add remote MCP servers to `<my-plugin>/mcp.json`, and point `plugin.json`'s `mcpServers`
    at `./mcp.json`.
-4. Register the plugin in the `plugins` array of
+4. Copy `<my-plugin>/plugin.json` to `<my-plugin>/.claude-plugin/plugin.json` (same content,
+   paths stay relative to the plugin root either way). Claude Desktop's marketplace sync
+   requires the manifest there specifically — without it, sync fails with
+   `marketplace_sync_plugin_missing_manifest`.
+5. Register the plugin in the `plugins` array of
    [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
 Validate the marketplace manifest before opening a PR:
