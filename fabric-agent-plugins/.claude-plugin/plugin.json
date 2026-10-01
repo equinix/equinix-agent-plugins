@@ -1,7 +1,7 @@
 {
   "name": "equinix-fabric",
-  "version": "1.0.0",
-  "description": "Operate Equinix Fabric from your agent: search inventory (connections, ports, cloud routers, service tokens, route filters/aggregations, time services) and manage Fabric Cloud Routers, BGP, route filters and route aggregations.",
+  "version": "1.1.0",
+  "description": "Operate Equinix Fabric from your agent: search inventory (connections, ports, cloud routers, service tokens, route filters/aggregations, time services); create, update and retry Fabric connections (EVPL, EPL, IP, Internet Access, EVP-LAN/EP-LAN); plan and manage Fabric Networks (EVP-LAN, EVP-Tree, EP-LAN, EP-Tree); and manage Fabric Cloud Routers, BGP, route filters and route aggregations.",
   "author": {
     "name": "Equinix Fabric",
     "url": "https://github.com/equinix/equinix-agent-plugins"
@@ -13,6 +13,9 @@
     "equinix",
     "fabric",
     "cloud-router",
+    "fabric-connection",
+    "fabric-network",
+    "evp-lan",
     "networking",
     "interconnection",
     "bgp",

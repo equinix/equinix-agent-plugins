@@ -8,10 +8,15 @@ and anything else that speaks MCP) can operate Equinix Fabric directly.
 
 | Plugin | Skills | MCP server |
 |---|---|---|
-| `equinix-fabric` | `show-fabric-inventory`, `manage-cloud-router` | `https://mcp.equinix.com/fabric` |
+| `equinix-fabric` | `show-fabric-inventory`, `manage-fabric-connection`, `manage-fabric-network`, `manage-cloud-router` | `https://mcp.equinix.com/fabric` |
 
 - **`show-fabric-inventory`** — search and list connections, ports, cloud routers, service
   tokens, route filters, route aggregations, and time services.
+- **`manage-fabric-connection`** — create (with validate-before-create), update, and retry
+  Fabric connections: EVPL, EPL, IP, Internet Access, and EVP-LAN/EP-LAN virtual connections,
+  including port-to-port, port-to-network, port-to-AWS, and FCR-to-port.
+- **`manage-fabric-network`** — plan, create, look up, compare, and update Fabric private
+  multipoint networks (EVP-LAN, EVP-Tree, EP-LAN, EP-Tree), including port compatibility checks.
 - **`manage-cloud-router`** — create/update Fabric Cloud Routers, configure BGP (IPv4/IPv6),
   and manage route filters, route filter rules, route aggregations, and aggregation rules.
 
@@ -37,6 +42,8 @@ fabric-agent-plugins/                # the equinix-fabric plugin
 ├── mcp.json                         # remote MCP server bundled with the plugin
 └── skills/
     ├── show-fabric-inventory/SKILL.md
+    ├── manage-fabric-connection/SKILL.md
+    ├── manage-fabric-network/SKILL.md
     └── manage-cloud-router/SKILL.md
 ```
 
